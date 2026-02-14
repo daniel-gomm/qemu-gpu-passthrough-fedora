@@ -1,7 +1,9 @@
 #!/bin/bash
 
-DEFAULTS_SAVE_PATH='./.gpu_passthrough_defaults.txt'
-
+# Use config directory for storing defaults
+CONFIG_DIR="${HOME}/.config/gpu-passthrough"
+mkdir -p "$CONFIG_DIR"
+DEFAULTS_SAVE_PATH="${CONFIG_DIR}/.gpu_passthrough_defaults.txt"
 
 RED='\033[0;31m'
 CYAN='\033[0;36m'
