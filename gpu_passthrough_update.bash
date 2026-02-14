@@ -26,7 +26,7 @@ Tested on Fedora 43 (Workstation Edition). ${RED}Do not use this script on other
 "
 
 # Load cached defaults if available
-if test -f "./.gpu_passthrough_defaults.txt"; then
+if test -f "$DEFAULTS_SAVE_PATH"; then
 	PREVIOUS_PASSTHROUGH_KERNEL=$(load_default CURRENT_PASSTHROUGH_KERNEL)
 	CPU_MANUFACTURER=$(load_default CPU_MANUFACTURER)
 	VFIO_PCI_IDS=$(load_default VFIO_PCI_IDS)
@@ -129,15 +129,15 @@ else
         if [[ "${OPTION^^}" == "Y"  ]]; then
                 # Edit dracut config
 		echo -e "${GREEN}Updating dracut...${NC}"
-		sudo echo "add_drivers+=\" vfio vfio_iommu_type1 vfio_pci \"" >> /etc/dracut.conf.d/local.conf
-		sudo dracut -f kver $(uname -r)
+		echo "add_drivers+=\" vfio vfio_iommu_type1 vfio_pci \"" | sudo tee -a /etc/dracut.conf.d/local.conf > /dev/null
+		sudo dracut -f --kver $(uname -r)
 	fi
 fi
 
 
 # Save defaults to file
-echo "CURRENT_PASSTHROUGH_KERNEL=$GPU_PASSTHROUGH_NAME" > $DEFAULTS_SAVE_PATH
-echo "CPU_MANUFACTURER=$CPU_MANUFACTURER" >> $DEFAULTS_SAVE_PATH
-echo "VFIO_PCI_IDS=$VFIO_PCI_IDS" >> $DEFAULTS_SAVE_PATH
+echo "CURRENT_PASSTHROUGH_KERNEL=$GPU_PASSTHROUGH_NAME" > "$DEFAULTS_SAVE_PATH"
+echo "CPU_MANUFACTURER=$CPU_MANUFACTURER" >> "$DEFAULTS_SAVE_PATH"
+echo "VFIO_PCI_IDS=$VFIO_PCI_IDS" >> "$DEFAULTS_SAVE_PATH"
 
 echo -e "${GREEN}Script ran successfully!${NC} Reboot your system and select the correct kernel to use GPU Passthrough."
