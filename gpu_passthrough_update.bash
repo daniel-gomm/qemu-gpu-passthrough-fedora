@@ -87,10 +87,10 @@ fi
 
 
 echo -e "${GREEN}Cloning default Kernel...${NC}"
-sudo grubby --grub2 --add-kernel=$DEFAULT_KERNEL --initrd=$DEFAULT_INITRD --copy-default --title="\"${GPU_PASSTHROUGH_NAME}\""
+sudo grubby --grub2 --add-kernel=$DEFAULT_KERNEL --initrd=$DEFAULT_INITRD --copy-default --title="${GPU_PASSTHROUGH_NAME}"
 
 echo -e "${GREEN}Updating Kernel Arguments (1/2)...${NC}"
-sudo grubby --update-kernel=0 --args="\"rd.driver.blacklist=nouveau,nvidia,nvidiafb,nvidia-gpu modprobe.blacklist=nouveau,nvidia,nvidiafb,nvidia-gpu\""
+sudo grubby --update-kernel=0 --args="rd.driver.blacklist=nouveau,nvidia,nvidiafb,nvidia-gpu modprobe.blacklist=nouveau,nvidia,nvidiafb,nvidia-gpu"
 
 if [[ "$CPU_MANUFACTURER" == "AMD"  ]]; then
 	CPU_ARG="amd_iommu"
@@ -99,7 +99,7 @@ else
 fi
 
 echo -e "${GREEN}Updating Kernel Arguments (2/2)...${NC}"
-sudo grubby --update-kernel=0 --args="\"video=efifb:off $CPU_ARG=on rd.driver.pre=vfio-pci kvm.ignore_msrs=1 vfio-pci.ids=$VFIO_PCI_IDS\""
+sudo grubby --update-kernel=0 --args="video=efifb:off $CPU_ARG=on rd.driver.pre=vfio-pci kvm.ignore_msrs=1 vfio-pci.ids=$VFIO_PCI_IDS"
 
 read -p "Select GPU Passthrough kernel as grub default (y/N): " OPTION
 if [[ ! "${OPTION^^}" == "Y"  ]]; then
