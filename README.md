@@ -10,7 +10,7 @@ The entire logic is captured in the bash script [gpu_passthrough_update.bash](./
 To install the script using the installer run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/daniel-gomm/qemu-gpu-passthrough-fedora/main/INSTALL.sh | bash
+curl -fsSL https://raw.githubusercontent.com/daniel-gomm/qemu-gpu-passthrough-fedora/refs/heads/main/install.sh | bash
 ```
 
 Then restart your terminal or run:
